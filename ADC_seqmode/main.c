@@ -15,7 +15,9 @@
 #include "adc.h"
 
 
+#define BUFF_SIZE   2
 
+float SampleTable[BUFF_SIZE];
 
 /*******************************************************************************
 * 函 数 名         : main
@@ -25,8 +27,7 @@
 *******************************************************************************/
 void main()
 {
-	int i=0;
-	float adc_vol;
+    int i;
 
 	InitSysCtrl();
 
@@ -37,14 +38,21 @@ void main()
 
 	LED_Init();
 	TIM0_Init(150,200000);//200ms
-	//SMG_Init();
+	for(i=0;i<BUFF_SIZE;i++)
+	{
+	    SampleTable[i]=0;
+	}
 	ADC_Init();
 
 	while(1)
 	{
-		adc_vol=(float)Read_ADCValue()*3.0/4096;
-		//SMG_DisplayFloat(adc_vol,2);
-//		SMG_DisplayInt(Read_ADCValue());
+	    while (AdcRegs.ADCST.bit.INT_SEQ1== 0){}
+	        AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
+		SampleTable[0] = ((AdcRegs.ADCRESULT0)>>4)*3.0/4095.0;
+		while (AdcRegs.ADCST.bit.INT_SEQ2== 0){}
+		            AdcRegs.ADCST.bit.INT_SEQ2_CLR = 1;
+		SampleTable[1] = ((AdcRegs.ADCRESULT8)>>4)*3.0/4095.0;
+
 
 	}
 }
