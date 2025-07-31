@@ -54,16 +54,8 @@ void main()
 	        AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
 		//adc_vol=(float)Read_ADCValue()*3.0/4096;
 		SampleTable[0] = ((AdcRegs.ADCRESULT0)>>4)*3.0/4095.0;
-		AdcRegs.ADCTRL2.bit.SOC_SEQ2 = 1;
-		while (AdcRegs.ADCST.bit.INT_SEQ2== 0){}
-		AdcRegs.ADCST.bit.INT_SEQ2_CLR = 1;
-		SampleTable[1] = ((AdcRegs.ADCRESULT8)>>4)*3.0/4095.0;
+		SampleTable[1] = ((AdcRegs.ADCRESULT1)>>4)*3.0/4095.0;
 
-		AdcRegs.ADCTRL2.bit.SOC_SEQ1 = 1;
-
-
-		//SMG_DisplayFloat(adc_vol,2);
-//		SMG_DisplayInt(Read_ADCValue());
 
 	}
 }
