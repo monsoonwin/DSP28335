@@ -36,8 +36,7 @@ void ADC_Init(void)
 
 	// Start SEQ1
 	//AdcRegs.ADCTRL2.all = 0x2000;
-	AdcRegs.ADCTRL2.bit.SOC_SEQ1 = 1;
-	AdcRegs.ADCTRL2.bit.SOC_SEQ2 = 1;
+	
 
 }
 
